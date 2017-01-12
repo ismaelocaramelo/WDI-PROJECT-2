@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const chargeSpotSchema = new mongoose.Schema({
   name: {type: String, required: true, trim: true, unique: true},
-  Latitude: {type: Number},
-  Longitude: {type: Number},
+  Latitude: {type: String},
+  Longitude: {type: String},
   PostTown: {type: String, required: true},
   PostCode: {type: String},
   Connector: {type: Array},
