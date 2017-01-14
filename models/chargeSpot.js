@@ -10,9 +10,6 @@ const chargeSpotSchema = new mongoose.Schema({
   PaymentRequiredFlag: {type: Boolean},
   SubscriptionRequiredFlag: {type: Boolean}
 });
-
-
-
 chargeSpotSchema.set('toJSON', {
   transform: function(doc, ret) {
     delete ret.__v;

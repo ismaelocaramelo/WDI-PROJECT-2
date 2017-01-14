@@ -5,11 +5,11 @@ const validator = require('validator');
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
-  passwordHash: { type: String, required: true }
+  passwordHash: { type: String, required: true },
+  favourites: [{ type: mongoose.Schema.ObjectId, ref: 'ChargeSpot' }]
 });
 
 
-module.exports = mongoose.model('User', userSchema);
 userSchema
   .virtual('password')
   .set(setPassword);
@@ -36,8 +36,6 @@ userSchema.set('toJSON', {
     return ret;
   }
 });
-
-
 
 function setPassword(value){
   this._password    = value;
@@ -73,3 +71,5 @@ function validateEmail(email) {
 function validatePassword(password){
   return bcrypt.compareSync(password, this.passwordHash);
 }
+
+module.exports = mongoose.model('User', userSchema);

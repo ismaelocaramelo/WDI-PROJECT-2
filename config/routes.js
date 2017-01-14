@@ -1,19 +1,34 @@
 const router  = require('express').Router();
-
+const users    = require('../controllers/users');
 const staticsController = require('../controllers/statics');
-const camerasController = require('../controllers/users');
 const chargeSpots       = require('../controllers/chargeSpots');
+const authentications   = require('../controllers/authentications');
 
 router.route('/')
   .get(staticsController.home);
 
-router.route('/users')
-  .get(camerasController.index);
+//auth routes
+router.route('/login')
+  .post(authentications.login);
+router.route('/register')
+  .post(authentications.register);
 
+//users routes
+router.route('/users')
+  .get(users.index)
+  .post(users.create);
+router.route('/users/:id')
+  .get(users.show)
+  .put(users.update)
+  .delete(users.delete);
+
+//chargeSpots routes
 router.route('/api/chargespots')
   .get(chargeSpots.index);
-
+router.route('/api/chargespots/postcode')
+  .post(chargeSpots.findPostCode);
 router.route('/api/chargespots/:type')
   .get(chargeSpots.index);
+
 
 module.exports = router;

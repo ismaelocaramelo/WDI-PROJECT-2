@@ -1,5 +1,6 @@
 module.exports = {
-  index: chargeSpotsIndex
+  index: chargeSpotsIndex,
+  findPostCode: chargeSpotsFindPostCode
 };
 
 const ChargeSpot = require('../models/chargeSpot');
@@ -32,3 +33,11 @@ function chargeSpotsIndex(req, res){
 // 22
 // 43
 // 50
+
+function chargeSpotsFindPostCode(req, res){
+  ChargeSpot.find({$or: [{'PostTown': req.body.postcode}, {'PostCode': req.body.postcode}]}, (err, spots) => { // $or is an array of posibilities
+    console.log(req.body.postcode);
+    if (err) return res.status(500).send();
+    return res.status(200).json(spots);
+  });
+}

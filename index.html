@@ -3,20 +3,62 @@
   <head>
     <meta charset="utf-8">
     <title>Charge Pots</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
-  
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS6aR9Ini0ffsm6TmMnX3u3GWRVTadsbI" charset="utf-8"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"></script>
     <script src="/js/client.js" charset="utf-8"></script>
+    <script src="/js/client_Users.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
-    <div id="map-canvas"></div>
-    <button type="button" class="S">Slow</button>
-    <button type="button" class="F">Faster</button>
-    <button type="button" class="AC">Super Faster</button>
-    <button type="button" class="DC">Super mega Faster</button>
+
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="#"><span class="S button"><img src="/images/S.png"></span></a></li>
+              <li><a href="#"><span class="F button"><img src="/images/F.png"></span></a></li>
+              <li><a href="#"><span class="AC button"><img src="/images/AC.png"></span></a></li>
+              <li><a href="#"><span class="DC button"><img src="/images/DC.png"></span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="login userslogin">Login</span></a></li>
+              <li><a href="#"><span class="SignUp usersNew">Sign up</span></a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control inputPostCode" name="postcode" placeholder="PostTown or PostCode">
+              </div>
+              <button type="submit" class="btn btn-default">Find Spots</button>
+            </form>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </header>
+    <main>
+      <div id="map-canvas"></div>
+      <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </main>
   </body>
 </html>
