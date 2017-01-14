@@ -1,9 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Anton');
+
 body {
   margin: 0;
 }
 
 #map-canvas {
-  width: 100%;
+  width: 80%;
   height: 100vh;
   margin: 0 auto;
+  float: right;
+}
+
+
+.infoConnector{
+  border-top: 1px solid grey;
+}
+
+.available{
+  color: green;
+}
+
+.unavailable{
+  color : red;
+}
+
+.icon-info{
+  width: 75px;
+  height: 75px;
+}
+
+
+.container-infowindow{
+  width: 500px;
+}
+
+.gm-style-iw{
+
+}
+// <span class="spot-name">${ spot.name }</span><br>
+// <span class="spot-PostTown">${ spot.PostTown}</span><br>
+// <span class="spot-infoConnector">${infoConnector}</span><br>
+
+.spot-name, .spot-PostTown, .spot-infoConnector{
+  font-family: Anton;
+}
+
+.spot-name{
+  font-size: 61px;
+  color: brown;
+}
+.spot-PostTown{
+  font-size: 45px;
+}
+.spot-infoConnector{
+  font-size: 28px;
 }

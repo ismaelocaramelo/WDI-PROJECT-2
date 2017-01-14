@@ -13,4 +13,7 @@ router.route('/users')
 router.route('/api/chargespots')
   .get(chargeSpots.index);
 
+router.route('/api/chargespots/:type')
+  .get(chargeSpots.index);
+
 module.exports = router;
