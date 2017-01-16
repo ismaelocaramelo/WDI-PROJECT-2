@@ -11,13 +11,9 @@ body {
   float: right;
 }
 
-.icon-info, .user_favourite img{
+.icon-info, {
   width: 75px;
   height: 75px;
-}
-
-.user_favourite img{
-  float: right;
 }
 
 .container-infowindow{
@@ -78,4 +74,17 @@ body {
 
 .navbar-form{
   margin-top: 17px;
+}
+
+.heart{
+  background-image: url('../images/heart.png');
+}
+
+.red-heart{
+  background-image: url('../images/Heart-Red.png');
+}
+
+.heart, .red-heart{
+  background-size: 35px;
+  float: right;
 }

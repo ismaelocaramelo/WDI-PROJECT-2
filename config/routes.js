@@ -20,8 +20,9 @@ router.route('/register')
 router.route('/users')
   .get(users.index)
   .post(users.create);
-router.route('/users/addFavourite/:idPost') // first the routes that exist and then with the ones with :variables
-  .get(users.addFavourite);
+router.route('/users/favourites/:idPost') // first the routes that exist and then with the ones with :variables
+  .get(users.addFavourite)
+  .put(users.removeFavourite);
 router.route('/users/:id')
   .get(users.show)
   .put(users.update)

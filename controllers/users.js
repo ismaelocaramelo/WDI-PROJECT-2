@@ -4,7 +4,8 @@ module.exports = {
   show: usersShow,
   update: usersUpdate,
   delete: usersDelete,
-  addFavourite: usersAddFavourite
+  addFavourite: usersAddFavourite,
+  removeFavourite: usersRemoveFavourite
 };
 
 const User = require('../models/user');
@@ -56,9 +57,24 @@ function usersDelete(req, res){
 
 function usersAddFavourite(req, res){
   //console.log(req.headers['host']);
-  //console.log(req.decoded);
+  //console.log(req.decoded); // it has the id of the user
   if(req.decoded){ //query.findOneAndUpdate(conditions, update, options, callback)
     User.findOneAndUpdate({_id: req.decoded.id, favourites: {$nin: [req.params.idPost]}}, {$push: {favourites: req.params.idPost }}, (err, user) => {
+      if (err) return res.status(500).json(err);
+      if (!user) return res.status(304).json({ error: 'You already have this spot as favourite' });
+
+      return res.status(200).json(user);
+    });
+  }else{
+    return res.status(403).json({ error: 'Access Denied' });
+  }
+}
+
+function usersRemoveFavourite(req, res){
+  if(req.decoded){
+    //Model.findByIdAndRemove(id, [options], [callback])
+    console.log('estamos en remove fav');
+    User.findOneAndUpdate({_id: req.decoded.id, favourites: {$in: [req.params.idPost]}}, {$pull: {favourites: req.params.idPost }}, (err, user) => {
       if (err) return res.status(500).json(err);
       if (!user) return res.status(304).json({ error: 'You already have this spot as favourite' });
 

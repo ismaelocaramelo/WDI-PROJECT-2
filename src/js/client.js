@@ -92,13 +92,13 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
     }
  const that = this;
    this.getUserInfo((output) => {
-     let fav = '';
+     let fav = 'heart';
+     let action = 'add';
      const spotId = spot._id;
      console.log(output);
-     if(output.favourites.indexOf(spotId) !== -1){
-       fav = '<img src="../images/Heart-Red.png">';
-     }else{
-       fav = '<img src="../images/heart.png">';
+     if(output.favourites && output.favourites.indexOf(spotId) !== -1){ // without checking that output.favourites has value, indexOf will be no readable
+       action = 'remove';
+       fav = 'red-heart';
      }
   that.infoWindow = new google.maps.InfoWindow({
     content: `<div class="container-infowindow">
@@ -106,7 +106,7 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
        <span class="spot-PostTown">${spot.PostTown}</span><br>
        <span class="spot-infoConnector">${infoConnector}</span><br>
        ${iconFee} ${iconSubs}
-       <span class="user_favourite" data-id='${spotId}'>${fav}</span>
+       <span class="user_favourite ${fav}" data-id='${spotId}' data-action='${action}'></span>
      </div>`
   });
   that.infoWindow.open(that.map, marker);

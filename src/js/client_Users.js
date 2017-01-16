@@ -16,8 +16,13 @@ function init() {
 
   $('body').on('click', '.user_favourite', () => {
     if(getToken() !== null){
+      const action = $('.user_favourite').data('action');
+      if(action === 'remove'){
+        removeFavourite($('.user_favourite'));
+      }else{
+        addFavourite($('.user_favourite'));
+      }
       //if we're inside this functions is because a token exist
-      addFavourite($('.user_favourite'));
     }else{
       //if no token exist
       usersLogin();
@@ -221,7 +226,7 @@ function getToken(){
 
 function addFavourite(obj){
   $.ajax({
-    url: `${API}/users/addFavourite/${obj.data('id')}`,
+    url: `${API}/users/favourites/${obj.data('id')}`,
     method: 'GET',
     beforeSend: (xhr)=>{
       setRequestHeader(xhr);
@@ -233,4 +238,16 @@ function addFavourite(obj){
 
 function getUserId(){
   return userId;
+}
+
+function removeFavourite(obj){
+  $.ajax({
+    url: `${API}/users/favourites/${obj.data('id')}`,
+    method: 'PUT',
+    beforeSend: (xhr)=>{
+      setRequestHeader(xhr);
+    }
+  }).done(() => {
+    $('.modal').modal('hide');
+  });
 }
