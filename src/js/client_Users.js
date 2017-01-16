@@ -1,6 +1,6 @@
 const $ = $;
 const API = 'http://localhost:3000';
-let userId = '';
+
 
 $(init);
 
@@ -14,20 +14,8 @@ function init() {
   $('body').on('submit', '.usersUpdate', usersUpdate);
   $('body').on('click', '.usersShow', usersShow);
 
-  $('body').on('click', '.user_favourite', () => {
-    if(getToken() !== null){
-      const action = $('.user_favourite').data('action');
-      if(action === 'remove'){
-        removeFavourite($('.user_favourite'));
-      }else{
-        addFavourite($('.user_favourite'));
-      }
-      //if we're inside this functions is because a token exist
-    }else{
-      //if no token exist
-      usersLogin();
-    }
-  });
+  $('body').on('click', '.user_favourite', setFav);
+
 }
 
 function usersNew(e){
@@ -203,7 +191,6 @@ function usersloginResponse(e){
   }).done((data) => {
     $('.modal').modal('hide');
     setToken(data.token);
-    userId = data.user._id;
   }).fail(err =>{
     console.log(err.responseText);
   });
@@ -236,9 +223,6 @@ function addFavourite(obj){
   });
 }
 
-function getUserId(){
-  return userId;
-}
 
 function removeFavourite(obj){
   $.ajax({
@@ -250,4 +234,25 @@ function removeFavourite(obj){
   }).done(() => {
     $('.modal').modal('hide');
   });
+}
+
+function setFav(){
+  if(getToken() !== null ){
+    const action = $('.user_favourite').data('action');
+    if(action === 'remove'){
+      $('.user_favourite').removeClass('red-heart');
+      $('.user_favourite').addClass('heart');
+      $('.user_favourite').data('action', 'add');
+      removeFavourite($('.user_favourite'));
+    }else if(action === 'add'){
+      $('.user_favourite').removeClass('heart');
+      $('.user_favourite').addClass('red-heart');
+      $('.user_favourite').data('action', 'remove');
+      addFavourite($('.user_favourite'));
+    }
+    //if we're inside this functions is because a token exist
+  }else{
+    //if no token exist
+    usersLogin();
+  }
 }

@@ -23,6 +23,8 @@ router.route('/users')
 router.route('/users/favourites/:idPost') // first the routes that exist and then with the ones with :variables
   .get(users.addFavourite)
   .put(users.removeFavourite);
+router.route('/users/token') // to get the user id back once we get the token.
+  .get(users.getUser);
 router.route('/users/:id')
   .get(users.show)
   .put(users.update)

@@ -11,7 +11,7 @@ body {
   float: right;
 }
 
-.icon-info, {
+.icon-info{
   width: 75px;
   height: 75px;
 }
@@ -85,6 +85,9 @@ body {
 }
 
 .heart, .red-heart{
-  background-size: 35px;
+  background-size: 75px;
+  background-repeat: no-repeat;
   float: right;
+  width: 75px;
+  height: 75px;
 }

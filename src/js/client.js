@@ -90,29 +90,29 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
     if (spot.SubscriptionRequiredFlag) {
       iconSubs = '<img class="icon-info" title="You need subscription" src="../images/subscription.png">';
     }
- const that = this;
-   this.getUserInfo((output) => {
-     let fav = 'heart';
-     let action = 'add';
-     const spotId = spot._id;
-     console.log(output);
-     if(output.favourites && output.favourites.indexOf(spotId) !== -1){ // without checking that output.favourites has value, indexOf will be no readable
-       action = 'remove';
-       fav = 'red-heart';
-     }
-  that.infoWindow = new google.maps.InfoWindow({
-    content: `<div class="container-infowindow">
-       <span class="spot-name">${spot.name}</span><br>
-       <span class="spot-PostTown">${spot.PostTown}</span><br>
-       <span class="spot-infoConnector">${infoConnector}</span><br>
-       ${iconFee} ${iconSubs}
-       <span class="user_favourite ${fav}" data-id='${spotId}' data-action='${action}'></span>
-     </div>`
-  });
-  that.infoWindow.open(that.map, marker);
-  that.map.setCenter(marker.getPosition());
-  that.map.setZoom(15);
- });
+    const that = this;
+    this.getUserInfo((output) => {
+      let fav = 'heart';
+      let action = 'add';
+      const spotId = spot._id;
+      console.log(output);
+      if(output.favourites && output.favourites.indexOf(spotId) !== -1){ // without checking that output.favourites has value, indexOf will be no readable for the wonderful browser
+        action = 'remove';
+        fav = 'red-heart';
+      }
+      that.infoWindow = new google.maps.InfoWindow({
+        content: `<div class="container-infowindow">
+          <span class="spot-name">${spot.name}</span><br>
+          <span class="spot-PostTown">${spot.PostTown}</span><br>
+          <span class="spot-infoConnector">${infoConnector}</span><br>
+          ${iconFee} ${iconSubs}
+          <span class="user_favourite ${fav}" data-id='${spotId}' data-action='${action}'></span>
+        </div>`
+      });
+      that.infoWindow.open(that.map, marker);
+      that.map.setCenter(marker.getPosition());
+      that.map.setZoom(15);
+    });
   });
 };
 
@@ -159,9 +159,11 @@ googleMap.clearInputPostCode = function(){
 
 googleMap.getUserInfo = function(callback){
   $.ajax({
-    url: `http://localhost:3000/users/${getUserId()}`
-  })
-  .done((data) => {
+    url: 'http://localhost:3000/users/token',
+    beforeSend: (xhr)=>{
+      setRequestHeader(xhr);
+    }
+  }).done((data) => {
     callback(data);
   });
 };
