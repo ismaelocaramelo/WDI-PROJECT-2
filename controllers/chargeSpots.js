@@ -36,7 +36,6 @@ function chargeSpotsIndex(req, res){
 
 function chargeSpotsFindPostCode(req, res){
   ChargeSpot.find({$or: [{'PostTown': req.body.postcode}, {'PostCode': req.body.postcode}]}, (err, spots) => { // $or is an array of posibilities
-    console.log(req.body.postcode);
     if (err) return res.status(500).send();
     return res.status(200).json(spots);
   });

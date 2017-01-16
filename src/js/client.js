@@ -48,8 +48,6 @@ googleMap.getChargeSpots = function(param) {
 
 
 googleMap.loopThroughChargeSpots = function(spots) {
-  console.log(spots);
-  console.log('hola');
   googleMap.clearMarkers();
   $.each(spots, (index, spot) => {
     setTimeout(() => {
@@ -70,7 +68,6 @@ googleMap.createMarkerForChargeSpots = function(spot) {
   markers.push(marker);
   googleMap.addInfoWindowForChargeSpots(spot, marker);
 };
-
 
 googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
   google.maps.event.addListener(marker, 'click', () => {
@@ -93,30 +90,37 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
     if (spot.SubscriptionRequiredFlag) {
       iconSubs = '<img class="icon-info" title="You need subscription" src="../images/subscription.png">';
     }
-
-    this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class="container-infowindow">
-                  <span class="spot-name">${spot.name}</span><br>
-                  <span class="spot-PostTown">${spot.PostTown}</span><br>
-                  <span class="spot-infoConnector">${infoConnector}</span><br>
-                  ${iconFee} ${iconSubs}
-                  <span class="user_favourite"><img src="../images/heart.png"></span>
-                </div>`
-    });
-    this.infoWindow.open(this.map, marker);
-    this.map.setCenter(marker.getPosition());
-    this.map.setZoom(15);
+ const that = this;
+   this.getUserInfo((output) => {
+     let fav = '';
+     const spotId = spot._id;
+     console.log(output);
+     if(output.favourites.indexOf(spotId) !== -1){
+       fav = '<img src="../images/Heart-Red.png">';
+     }else{
+       fav = '<img src="../images/heart.png">';
+     }
+  that.infoWindow = new google.maps.InfoWindow({
+    content: `<div class="container-infowindow">
+       <span class="spot-name">${spot.name}</span><br>
+       <span class="spot-PostTown">${spot.PostTown}</span><br>
+       <span class="spot-infoConnector">${infoConnector}</span><br>
+       ${iconFee} ${iconSubs}
+       <span class="user_favourite" data-id='${spotId}'>${fav}</span>
+     </div>`
+  });
+  that.infoWindow.open(that.map, marker);
+  that.map.setCenter(marker.getPosition());
+  that.map.setZoom(15);
+ });
   });
 };
-
 
 googleMap.clearMarkers = function(){
   for(let i = 0; i < markers.length; i++){
     markers[i].setMap(null);
   }
 };
-
-//Tengo que hacer una funcion para cada button y selecion el right marker entonces al iniciar el mapa espero a que marque el boton
 
 googleMap.initMarkes = function() {
   $('.S').on('click', () => {
@@ -141,7 +145,6 @@ googleMap.findPostCode = function(e){
   const url = 'http://localhost:3000/api/chargespots/postcode';
   const method = 'POST';
   const data = $(this).serialize();
-  console.log(data);
   $.ajax({
     url,
     method,
@@ -153,5 +156,15 @@ googleMap.findPostCode = function(e){
 googleMap.clearInputPostCode = function(){
   $('.inputPostCode').val('');
 };
+
+googleMap.getUserInfo = function(callback){
+  $.ajax({
+    url: `http://localhost:3000/users/${getUserId()}`
+  })
+  .done((data) => {
+    callback(data);
+  });
+};
+
 
 $(googleMap.mapSetup.bind(googleMap));

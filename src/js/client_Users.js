@@ -1,5 +1,6 @@
 const $ = $;
 const API = 'http://localhost:3000';
+let userId = '';
 
 $(init);
 
@@ -12,6 +13,16 @@ function init() {
   $('body').on('click', '.usersEdit', usersEdit);
   $('body').on('submit', '.usersUpdate', usersUpdate);
   $('body').on('click', '.usersShow', usersShow);
+
+  $('body').on('click', '.user_favourite', () => {
+    if(getToken() !== null){
+      //if we're inside this functions is because a token exist
+      addFavourite($('.user_favourite'));
+    }else{
+      //if no token exist
+      usersLogin();
+    }
+  });
 }
 
 function usersNew(e){
@@ -21,7 +32,7 @@ function usersNew(e){
     <form method="post" action="${API}/register" class="usersCreate">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add User</h4>
+        <h4 class="modal-title">Welcome to Green Points</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -33,12 +44,12 @@ function usersNew(e){
           <input class="form-control" type="text" name="user[email]" id="user_email" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="user_password">Passwors</label>
-          <input class="form-control" type="text" name="user[password]" id="user_password" placeholder="Password">
+          <label for="user_password">Password</label>
+          <input class="form-control" type="password" name="user[password]" id="user_password" placeholder="Password">
         </div>
         <div class="form-group">
           <label for="user_passwordConfirmation">Repeat password</label>
-          <input class="form-control" type="text" name="user[passwordConfirmation]" id="user_passwordConfirmation" placeholder="Repeat Password">
+          <input class="form-control" type="password" name="user[passwordConfirmation]" id="user_passwordConfirmation" placeholder="Repeat Password">
         </div>
       </div>
       <div class="modal-footer">
@@ -165,8 +176,8 @@ function usersLogin(e){
           <input class="form-control" type="text" name="user[email]" id="user_email" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="user_password">Passwors</label>
-          <input class="form-control" type="text" name="user[password]" id="user_password" placeholder="Password">
+          <label for="user_password">Password</label>
+          <input class="form-control" type="password" name="user[password]" id="user_password" placeholder="Password">
         </div>
       </div>
       <div class="modal-footer">
@@ -180,15 +191,46 @@ function usersLogin(e){
 
 function usersloginResponse(e){
   if (e) e.preventDefault();
-
   $.ajax({
     url: $(this).attr('action'),
     type: $(this).attr('method'),
     data: $(this).serialize()
-  }).done(() => {
+  }).done((data) => {
     $('.modal').modal('hide');
-    console.log('si llega el paquete');
+    setToken(data.token);
+    userId = data.user._id;
   }).fail(err =>{
     console.log(err.responseText);
   });
+}
+
+function setRequestHeader(xhr) {
+  return xhr.setRequestHeader('Authorization', `Bearer ${getToken()}`);
+}
+
+function setToken(token){
+  return window.localStorage.setItem('token', token);
+}
+
+function removeToken(){
+  return window.localStorage.clear();
+}
+function getToken(){
+  return window.localStorage.getItem('token');
+}
+
+function addFavourite(obj){
+  $.ajax({
+    url: `${API}/users/addFavourite/${obj.data('id')}`,
+    method: 'GET',
+    beforeSend: (xhr)=>{
+      setRequestHeader(xhr);
+    }
+  }).done(() => {
+    $('.modal').modal('hide');
+  });
+}
+
+function getUserId(){
+  return userId;
 }

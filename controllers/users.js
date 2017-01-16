@@ -3,7 +3,8 @@ module.exports = {
   create: usersCreate,
   show: usersShow,
   update: usersUpdate,
-  delete: usersDelete
+  delete: usersDelete,
+  addFavourite: usersAddFavourite
 };
 
 const User = require('../models/user');
@@ -27,10 +28,7 @@ function usersCreate(req, res){
 function usersShow(req, res){
   const id = req.params.id;
 
-  User
-  .findById({ _id: id })
-  .populate('projects')
-  .exec((err, user) => {
+  User.findById(id, (err, user) => {
     if (err) return res.status(500).json(err);
     if (!user) return res.status(404).json({ error: 'No user was found.' });
     return res.status(200).json(user);
@@ -54,4 +52,19 @@ function usersDelete(req, res){
     if (err) return res.status(500).json(err);
     return res.sendStatus(200);
   });
+}
+
+function usersAddFavourite(req, res){
+  //console.log(req.headers['host']);
+  //console.log(req.decoded);
+  if(req.decoded){ //query.findOneAndUpdate(conditions, update, options, callback)
+    User.findOneAndUpdate({_id: req.decoded.id, favourites: {$nin: [req.params.idPost]}}, {$push: {favourites: req.params.idPost }}, (err, user) => {
+      if (err) return res.status(500).json(err);
+      if (!user) return res.status(304).json({ error: 'You already have this spot as favourite' });
+
+      return res.status(200).json(user);
+    });
+  }else{
+    return res.status(403).json({ error: 'Access Denied' });
+  }
 }
