@@ -67,9 +67,16 @@ body {
   height: 70px;
 }
 
+.heart, .red-heart, .fav{
+  background-repeat: no-repeat;
+  width: 75px;
+  height: 75px;
+}
 
-.navbar-form{
-  margin-top: 17px;
+.fav{
+  background-image: url('../images/Fav_image.png');
+  background-size: 70px;
+  float: left;
 }
 
 .heart{
@@ -82,10 +89,11 @@ body {
 
 .heart, .red-heart{
   background-size: 75px;
-  background-repeat: no-repeat;
   float: right;
-  width: 75px;
-  height: 75px;
+}
+
+.navbar-form{
+  margin-top: 17px;
 }
 
 .navbar{

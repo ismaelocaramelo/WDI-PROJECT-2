@@ -15,7 +15,7 @@ function init() {
   $('body').on('click', '.usersShow', usersShow);
 
   $('body').on('click', '.user_favourite', setFav);
-
+  $('body').on('click', '.fav', getFavourites);
 }
 
 function usersNew(e){
@@ -260,4 +260,15 @@ function setFav(){
 
 function setFavourite(num){
   $('.fav').html(num);
+}
+
+function getFavourites(e){
+  if(e) e.preventDefault();
+  $.ajax({
+    url: `${API}/users/:id/favourites`,
+    method: 'GET',
+    beforeSend: (xhr)=>{
+      setRequestHeader(xhr);
+    }
+  }).done(googleMap.loopThroughChargeSpots);
 }

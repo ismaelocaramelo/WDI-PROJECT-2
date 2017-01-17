@@ -29,6 +29,8 @@ router.route('/users/:id')
   .get(users.show)
   .put(users.update)
   .delete(users.delete);
+router.route('/users/:id/favourites')
+  .get(users.FavouritesSpots);
 
 //chargeSpots routes
 router.route('/api/chargespots')
@@ -37,6 +39,4 @@ router.route('/api/chargespots/postcode')
   .post(chargeSpots.findPostCode);
 router.route('/api/chargespots/:type')
   .get(chargeSpots.index);
-
-
 module.exports = router;
