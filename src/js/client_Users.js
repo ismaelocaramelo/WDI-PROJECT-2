@@ -7,7 +7,6 @@ function init() {
   $('.usersNew').on('click', usersNew);
   $('.userslogin').on('click', usersLogin);
   $('.logout').on('click', logout);
-  $('.usersIndex').on('click', getUserInfo);
 
   $('body').on('submit', '.usersCreate', usersCreate);
   $('body').on('submit', '.usersloginform', usersloginResponse);
@@ -23,19 +22,18 @@ function init() {
 }
 
 function loggedInState(){
-  $('.loggedIn').show();
   $('.loggedOut').hide();
-  getUserInfo();
+  $('.loggedIn').show();
 }
 
 function loggedOutState(){
   $('.loggedIn').hide();
   $('.loggedOut').show();
-  usersCreate();
 }
 
 function logout(e){
   e.preventDefault();
+  setFavourite('');
   removeToken();
   loggedOutState();
 }
@@ -127,10 +125,9 @@ function usersloginResponse(e){
     if (data.token) {
       setToken(data.token);
       setFavourite(data.user.favourites.length);
+      $('.userindex').html(data.user.username);
       loggedInState();
     }
-  }).fail(err =>{
-    console.log(err.responseText);
   });
 }
 
@@ -157,7 +154,8 @@ function addFavourite(obj){
     beforeSend: (xhr)=>{
       setRequestHeader(xhr);
     }
-  }).done(() => {
+  }).done((data) => {
+    setFavourite(data.favourites.length);
     $('.modal').modal('hide');
   });
 }
@@ -169,7 +167,8 @@ function removeFavourite(obj){
     beforeSend: (xhr)=>{
       setRequestHeader(xhr);
     }
-  }).done(() => {
+  }).done((data) => {
+    setFavourite(data.favourites.length);
     $('.modal').modal('hide');
   });
 }
@@ -201,24 +200,15 @@ function setFavourite(num){
 
 function getFavourites(e){
   if(e) e.preventDefault();
-  $.ajax({
-    url: `${API}/users/:id/favourites`,
-    method: 'GET',
-    beforeSend: (xhr)=>{
-      setRequestHeader(xhr);
-    }
-  }).done(googleMap.loopThroughChargeSpots);
-}
-
-function getUserInfo(e){
-  if (e) e.preventDefault();
-  $.ajax({
-    url: `${API}/users/token`,
-    method: 'GET',
-    beforeSend: (xhr)=>{
-      setRequestHeader(xhr);
-    }
-  }).done((data) =>{
-    $('.userindex').html(data.name);
-  });
+  if(getToken() !== null ){
+    $.ajax({
+      url: `${API}/users/:id/favourites`,
+      method: 'GET',
+      beforeSend: (xhr)=>{
+        setRequestHeader(xhr);
+      }
+    }).done(googleMap.loopThroughChargeSpots);
+  }else{
+    usersLogin();
+  }
 }

@@ -99,7 +99,7 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
       });
       that.infoWindow.open(that.map, marker);
       that.map.setCenter(marker.getPosition());
-      that.map.setZoom(15);
+      that.map.setZoom(10);
     });
   });
 };

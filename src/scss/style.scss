@@ -12,12 +12,12 @@ body {
 }
 
 .icon-info{
-  width: 75px;
-  height: 75px;
+  width: 50px;
+  height: 50px;
 }
 
 .container-infowindow{
-  width: 500px;
+  width: 600px;
 }
 
 .gm-style-iw{
@@ -32,7 +32,7 @@ body {
 }
 
 .spot-name{
-  font-size: 61px;
+  font-size: 50px;
   color: brown;
 }
 .spot-PostTown{
@@ -61,22 +61,12 @@ body {
   color : red;
 }
 
-
-.button img{
-  width: 70px;
-  height: 70px;
-}
-
-.heart, .red-heart, .fav{
+.heart, .red-heart{
   background-repeat: no-repeat;
-  width: 75px;
-  height: 75px;
-}
-
-.fav{
-  background-image: url('../images/Fav_image.png');
-  background-size: 70px;
-  float: left;
+  width: 50px;
+  height: 50px;
+  background-size: 50px;
+  float: right;
 }
 
 .heart{
@@ -87,11 +77,6 @@ body {
   background-image: url('../images/Heart-Red.png');
 }
 
-.heart, .red-heart{
-  background-size: 75px;
-  float: right;
-}
-
 .navbar-form{
   margin-top: 17px;
 }
@@ -99,8 +84,60 @@ body {
 .navbar{
   margin-bottom: 0;
   border-bottom: 2px solid rgba(0, 0, 0, 0);
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0);
   position: fixed;
   width: 100%;
   z-index: 100;
+}
+
+.button, button, .fav{
+  color: #777;
+  fill: #777;
+  background-color: hsla(0,0%,100%,1);
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 11px;
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  box-shadow: 0 8px 8px rgba(0,0,0,.8);
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.button img{
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  font-size: 1em;
+  padding: 15px;
+  background-color: #fafafa;
+  margin-right: 10px;
+}
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+.fav{
+  background-image: url('../images/Fav_image.png');
+  background-size: 30px;
+  background-position: center;
+  color: white;
+  line-height: 20px;
+  background-repeat: no-repeat;
+  width: 75px;
 }
