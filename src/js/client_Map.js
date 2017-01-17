@@ -49,6 +49,7 @@ googleMap.getChargeSpots = function(param) {
 
 googleMap.loopThroughChargeSpots = function(spots) {
   googleMap.clearMarkers();
+  googleMap.map.setZoom(7);
   $.each(spots, (index, spot) => {
     setTimeout(() => {
       googleMap.createMarkerForChargeSpots(spot);
