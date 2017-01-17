@@ -1,6 +1,6 @@
 module.exports = {
   index: chargeSpotsIndex,
-  findPostCode: chargeSpotsFindPostCode,
+  findPostCode: chargeSpotsFindPostCode
 };
 
 const ChargeSpot = require('../models/chargeSpot');

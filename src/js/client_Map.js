@@ -4,20 +4,7 @@ const google = google;
 
 const markers = [];
 
-// var mapOptions = {
-//   minZoom: 2,
-//   maxZoom: 6,
-//   zoom: continentOptions[continent][2], //establecemos el zoom por defecto para mostrar la posición por defecto - WORLD
-//   center: new google.maps.LatLng(continentOptions[continent][0], continentOptions[continent][1]), //Centramos el mapa en la posición por defecto - WORLD
-//   disableDefaultUI: true, //desactivamos los controles de la interfaz
-//   scrollwheel: true, //desactivamos la ruleta del raton
-//   draggable: true, //desactivamos el poder arrastrar el mapa
-//   disableDoubleClickZoom: false, //desactivamos el dobleClick , esto sirve para que no se pueda hacer zoom mediante dobleClick
-//   mapTypeControl: false, //desactivamos los controles del mapa
-//   scaleControl: false, //desactivamos el controle de zoom
-//   navigationControl: false, //desactivamos el control para poder navegar sobre el mapa
-//   streetViewControl: false //desactivamos el street View
-//  };
+
 googleMap.mapSetup = function() {
   const canvas = document.getElementById('map-canvas');
 
@@ -26,12 +13,12 @@ googleMap.mapSetup = function() {
     minZoom: 7  ,
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    disableDefaultUI: true, //desactivamos los controles de la interfaz
-    disableDoubleClickZoom: false, //desactivamos el dobleClick , esto sirve para que no se pueda hacer zoom mediante dobleClick
-    mapTypeControl: false, //desactivamos los controles del mapa
-    scaleControl: false, //desactivamos el controle de zoom
-    navigationControl: false, //desactivamos el control para poder navegar sobre el mapa
-    streetViewControl: false //desactivamos el street View
+    disableDefaultUI: true, //desactivate controls interface
+    disableDoubleClickZoom: false, //desactivate dobleClick
+    mapTypeControl: false, //desactivate map controls
+    scaleControl: false, //desactivate zoom controls
+    navigationControl: false, //desactivate navigation Control
+    streetViewControl: false //desactivate street-View
   };
 
   this.map = new google.maps.Map(canvas, mapOptions);

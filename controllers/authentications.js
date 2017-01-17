@@ -34,19 +34,20 @@ function authenticationsLogin(req, res){
 
 function verifyToken(req, res, next){
   let token = '';
-  if(req.headers && req.headers['authorization'] && req.headers['authorization'].split(' ').length === 2){
+
+  if (req.headers && req.headers['authorization'] && req.headers['authorization'].split(' ').length === 2){
     token = req.headers['authorization'].split(' ')[1];
     jwt.verify(token, config.secret, (err, decoded) => {
       if(err) return res.status(403).json({success: false, message: 'Access denied'}); //FORBIDEN ACCESS
+
       User.findById(decoded.id, (err, user) => {
         if (err) return res.status(500).json({success: false, message: 'Something went wrong.' });
         if (!user) return res.status(401).json({success: false, message: 'Unauthorized.' });
-
         req.decoded = decoded;// decoded = {id: user._id}, config.secret, {expiresIn: 60 * 60}
         return next();
       });
     });
-  }else{
+  } else{
     return next();
   }
 }
