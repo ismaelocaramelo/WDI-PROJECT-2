@@ -6,6 +6,7 @@ const routes   = require('./config/routes');
 const config   = require('./config/config');
 const bodyParser = require('body-parser');
 
+mongoose.Promise = global.Promise;
 mongoose.connect(config.db);
 
 app.use(express.static(`${__dirname}/public`));

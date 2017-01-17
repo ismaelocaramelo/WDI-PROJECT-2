@@ -19,9 +19,7 @@ function usersIndex(req, res){
 }
 
 function usersCreate(req, res){
-  const user = new User(req.body.user);
-
-  user.save((err, user) => {
+  User.create(req.body.user, (err, user) => {
     if (err) return res.status(500).json(err);
     return res.status(201).json(user);
   });
@@ -77,11 +75,20 @@ function usersRemoveFavourite(req, res){
   console.log('remove fav');
   if(req.decoded){
     //Model.findByIdAndRemove(id, [options], [callback])
-    User.findOneAndUpdate({_id: req.decoded.id, favourites: {$in: [req.params.idPost]}}, {new: true}, {$pull: {favourites: req.params.idPost }}, (err, user) => {
+    User.findOne({_id: req.decoded.id}, (err, user) => {
       if (err) return res.status(500).json(err);
       if (!user) return res.status(304).json({ error: 'You already have this spot as favourite' });
+
+      //{$pull: {favourites: [req.params.idPost] }} //ñapa
+      const index = user.favourites.indexOf(req.params.idPost);
+      if( index !== -1){
+        user.favourites.splice(index, 1);
+      }
       console.log(user.favourites.length);
-      return res.status(200).json(user);
+      user.save((err, user) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(user);
+      });
     });
   }else{
     return res.status(403).json({ error: 'Access Denied' });

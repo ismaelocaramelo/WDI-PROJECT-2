@@ -191,6 +191,7 @@ function usersloginResponse(e){
   }).done((data) => {
     $('.modal').modal('hide');
     setToken(data.token);
+    setFavourite(data.user.favourites.length);
   }).fail(err =>{
     console.log(err.responseText);
   });
@@ -255,4 +256,8 @@ function setFav(){
     //if no token exist
     usersLogin();
   }
+}
+
+function setFavourite(num){
+  $('.fav').html(num);
 }

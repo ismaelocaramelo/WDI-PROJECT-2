@@ -20,7 +20,7 @@ function chargeSpotsIndex(req, res){
     }
     filter = {'Connector.RatedOutputkW': voltage };
   }
-  ChargeSpot.find(filter, (err, spots) => {
+  ChargeSpot.find(filter).limit(1000).exec((err, spots) => {
 
     if (err) return res.status(500).send();
     return res.status(200).json(spots);
@@ -35,7 +35,10 @@ function chargeSpotsIndex(req, res){
 // 50
 
 function chargeSpotsFindPostCode(req, res){
-  ChargeSpot.find({$or: [{'PostTown': req.body.postcode}, {'PostCode': req.body.postcode}]}, (err, spots) => { // $or is an array of posibilities
+  const postCode = req.body.postcode;
+  //regex is regular expression
+  //new RegExp is a constructor passing two argu, 1st where is the variable, 2nd means insensitive in this case but it could be anything
+  ChargeSpot.find({$or: [{'PostTown': {$regex: new RegExp(postCode, 'i')}}, {'PostCode': {$regex: new RegExp(postCode, 'i')} }]}, (err, spots) => { // $or is an array of posibilities
     if (err) return res.status(500).send();
     return res.status(200).json(spots);
   });
