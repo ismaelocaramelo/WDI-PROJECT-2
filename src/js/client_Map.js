@@ -83,7 +83,6 @@ googleMap.addInfoWindowForChargeSpots = function(spot, marker) {
       let fav = 'heart';
       let action = 'add';
       const spotId = spot._id;
-      console.log(output);
       if(output.favourites && output.favourites.indexOf(spotId) !== -1){ // without checking that output.favourites has value, indexOf will be no readable for the wonderful browser
         action = 'remove';
         fav = 'red-heart';

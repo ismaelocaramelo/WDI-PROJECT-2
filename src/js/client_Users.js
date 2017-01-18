@@ -1,34 +1,44 @@
 const $ = $;
 const API = 'http://localhost:3000';
+const googleMap = googleMap || {};
 
 $(init);
 
 function init() {
-  $('.usersNew').on('click', usersNew);
-  $('.userslogin').on('click', usersLogin);
-  $('.logout').on('click', logout);
+  if(getToken()){
+    loggedInState();
+  } else {
+    loggedOutState();
+  }
+  $('body').on('click', '.logout', logout);
+  $('body').on('click', '.userslogin', usersLogin);
+  $('body').on('click', '.usersNew', usersNew);
 
   $('body').on('submit', '.usersCreate', usersCreate);
   $('body').on('submit', '.usersloginform', usersloginResponse);
 
   $('body').on('click', '.user_favourite', setFav);
   $('body').on('click', '.fav', getFavourites);
+}
 
-  if(getToken()){
-    loggedInState();
-  } else {
-    loggedOutState();
+
+function loggedInState(user){
+  $('#button1').addClass('userindex').removeClass('userslogin');
+  $('#button2').addClass('logout').removeClass('usersNew').html('Log out');
+  if(!user){ //When the user was logged and the pages is refreshed
+    googleMap.getUserInfo((output) =>{
+      $('#button1').html(output.username);
+      setFavourite(output.favourites.length);
+    });
+  }else{ //when the user just loggin
+    $('#button1').html(user.username);
+    setFavourite(user.favourites.length);
   }
 }
 
-function loggedInState(){
-  $('.loggedOut').hide();
-  $('.loggedIn').show();
-}
-
 function loggedOutState(){
-  $('.loggedIn').hide();
-  $('.loggedOut').show();
+  $('#button1').addClass('userslogin').removeClass('userindex').html('Login');
+  $('#button2').addClass('usersNew').removeClass('logout').html('Sign up');
 }
 
 function logout(e){
@@ -122,11 +132,9 @@ function usersloginResponse(e){
     data: $(this).serialize()
   }).done((data) => {
     $('.modal').modal('hide');
-    if (data.token) {
-      setToken(data.token);
-      setFavourite(data.user.favourites.length);
-      $('.userindex').html(data.user.username);
-      loggedInState();
+    if (data.token) { // token returned by the user's controllers
+      setToken(data.token); //store the token in the browser
+      loggedInState(data.user);
     }
   });
 }

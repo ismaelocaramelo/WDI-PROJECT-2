@@ -17,29 +17,22 @@ body {
 }
 
 .container-infowindow{
-  width: 600px;
+  width: 400px;
 }
-
-.gm-style-iw{
-
-}
-// <span class="spot-name">${ spot.name }</span><br>
-// <span class="spot-PostTown">${ spot.PostTown}</span><br>
-// <span class="spot-infoConnector">${infoConnector}</span><br>
 
 .spot-name, .spot-PostTown, .spot-infoConnector, .btn .btn-default{
   font-family: Anton;
 }
 
 .spot-name{
-  font-size: 50px;
+  font-size: 30px;
   color: brown;
 }
 .spot-PostTown{
-  font-size: 45px;
+  font-size: 20px;
 }
 .spot-infoConnector{
-  font-size: 28px;
+  font-size: 15px;
 }
 
 .infoConnector{
@@ -58,7 +51,7 @@ body {
 
 .unavailable{
   float: right;
-  color : red;
+  color: red;
 }
 
 .heart, .red-heart{
@@ -79,6 +72,15 @@ body {
 
 .navbar-form{
   margin-top: 17px;
+}
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
 }
 
 .navbar{
@@ -122,14 +124,6 @@ body {
   padding: 15px;
   background-color: #fafafa;
   margin-right: 10px;
-}
-.navbar .navbar-nav {
-    display: inline-block;
-    float: none;
-}
-
-.navbar .navbar-collapse {
-    text-align: center;
 }
 
 .fav{
