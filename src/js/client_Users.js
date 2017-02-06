@@ -1,5 +1,5 @@
 const $ = $;
-const API = 'http://localhost:3000';
+const API = window.location.origin;
 const googleMap = googleMap || {};
 
 $(init);
@@ -25,12 +25,12 @@ function init() {
 function loggedInState(user){
   $('#button1').addClass('userindex').removeClass('userslogin');
   $('#button2').addClass('logout').removeClass('usersNew').html('Log out');
-  if(!user){ //When the user was logged and the pages is refreshed
+  if(!user){ //When the user was logged and the page is refreshed
     googleMap.getUserInfo((output) =>{
       $('#button1').html(output.username);
       setFavourite(output.favourites.length);
     });
-  }else{ //when the user just loggin
+  }else{ //when the user has just loggined
     $('#button1').html(user.username);
     setFavourite(user.favourites.length);
   }

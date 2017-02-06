@@ -111,9 +111,9 @@ function usersGetUser(req, res){
 }
 
 function usersFavouritesSpots(req, res){
-  //we need to: verify if is there is a token to know the identity
-  //we need: the lenght of his favourites
-  //we gonna loop over those and show them in the map
+  //I need to: verify if is there is a token to know the identity
+  //I need: the lenght of his favourites
+  //I gonna loop over those and show them in the map
   if(req.decoded){
     console.log('estamos en userFAVspots');
       User

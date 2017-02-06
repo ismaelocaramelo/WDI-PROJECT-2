@@ -1,6 +1,7 @@
 const googleMap = googleMap || {};
 const $ = $;
 const google = google;
+const url = window.location.origin;
 
 const markers = [];
 
@@ -29,7 +30,7 @@ googleMap.mapSetup = function() {
 googleMap.getChargeSpots = function(param) {
   param = param || ''; // if it's undefined, param = '' ,if not param = param
   param = (param === '') ? '' : `/${param}`; // if param has value we include a '/'
-  $.get(`http://localhost:3000/api/chargespots${param}`).done(this.loopThroughChargeSpots);
+  $.get(`${url}/api/chargespots${param}`).done(this.loopThroughChargeSpots);
   this.clearInputPostCode();
 };
 
@@ -129,7 +130,7 @@ googleMap.initMarkes = function() {
 googleMap.findPostCode = function(e){
   if(e) e.preventDefault();
 
-  const url = 'http://localhost:3000/api/chargespots/postcode';
+  const url = `${url}/api/chargespots/postcode`;
   const method = 'POST';
   const data = $(this).serialize();
   $.ajax({
@@ -146,8 +147,8 @@ googleMap.clearInputPostCode = function(){
 
 googleMap.getUserInfo = function(callback){
   $.ajax({
-    url: 'http://localhost:3000/users/token',
-    beforeSend: (xhr)=>{
+    url: `${url}/users/token`,
+    beforeSend: (xhr) => {
       setRequestHeader(xhr);
     }
   }).done((data) => {

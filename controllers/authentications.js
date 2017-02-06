@@ -20,7 +20,7 @@ function authenticationsRegister(req, res){
 
 function authenticationsLogin(req, res){
   User.findOne({ email: req.body.user.email }, (err, user) => {
-    if (err) return res.status(500).json({success: false, message: 'Something went wrong.' });
+    if (err) return res.status(500).json({success: false, message: `Something went wrong: ${err.message}` });
     if (!user) return res.status(301).json({success: false, message: 'No user was found' });
 
     if(!user.validatePassword(req.body.user.password)) {
