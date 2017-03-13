@@ -3,6 +3,7 @@ const $ = $;
 const google = google;
 const url = window.location.origin;
 
+
 const markers = [];
 
 
@@ -130,11 +131,11 @@ googleMap.initMarkes = function() {
 googleMap.findPostCode = function(e){
   if(e) e.preventDefault();
 
-  const url = `${url}/api/chargespots/postcode`;
+  const url2 = `${url}/api/chargespots/postcode`;
   const method = 'POST';
   const data = $(this).serialize();
   $.ajax({
-    url,
+    url: url2,
     method,
     data
   })
