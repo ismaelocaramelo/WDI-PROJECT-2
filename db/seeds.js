@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const ChargeSpot = require('../models/chargeSpot');
 const rp       = require('request-promise');
 const Connector = require('../models/connector');
+const config = require('../config/config');
 
-const databaseURL = 'mongodb://localhost:27017/green-charge-vehicle';
-mongoose.connect(databaseURL);
+mongoose.connect(config.db);
 
 ChargeSpot.collection.drop();
 
